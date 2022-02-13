@@ -13,8 +13,18 @@ $(document).keypress(function() {
 function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
   var randomChosenColor = buttonColors[randomNumber];
-  $("#" + randomChosenColor).fadeOut(50).fadeIn(50);
-  playSound(randomChosenColor);
+  var i = 0;
+  function playSequence() {
+    setTimeout(function () {
+      $("#" + gamePattern[i]).fadeOut(300).fadeIn(300);
+      playSound(gamePattern[i]);
+      i++;
+      if (i < gamePattern.length)
+        playSequence();
+    }, 300);
+
+  }
+  playSequence();
   $("h1").text("Level " + level);
   gamePattern.push(randomChosenColor);
   userClickedPattern = [];
